@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "/MitchsPizzeria/static/js/main.cb383cc2.js",
+    "main.js": "/MitchsPizzeria/static/js/main.546f6ba8.js",
     "static/js/787.0d53c42f.chunk.js": "/MitchsPizzeria/static/js/787.0d53c42f.chunk.js",
     "static/media/Dessert.jpg": "/MitchsPizzeria/static/media/Dessert.86ba0c078e6231bfc57c.jpg",
     "static/media/Drink.jpg": "/MitchsPizzeria/static/media/Drink.035b918e06a7b09563eb.jpg",
     "static/media/Pizza.jpg": "/MitchsPizzeria/static/media/Pizza.a63a809f8cfec62c51a2.jpg",
     "index.html": "/MitchsPizzeria/index.html",
-    "main.cb383cc2.js.map": "/MitchsPizzeria/static/js/main.cb383cc2.js.map",
+    "main.546f6ba8.js.map": "/MitchsPizzeria/static/js/main.546f6ba8.js.map",
     "787.0d53c42f.chunk.js.map": "/MitchsPizzeria/static/js/787.0d53c42f.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.cb383cc2.js"
+    "static/js/main.546f6ba8.js"
   ]
 }
