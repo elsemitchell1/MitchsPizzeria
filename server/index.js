@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const {resolve} = require("path");
 const env = require("dotenv").config({path: "./.env"});
@@ -7,6 +8,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2022-08-01",
 });
 
+app.use(cors());
 app.use(express.json());
 
 app.use(express.static("../public"));
