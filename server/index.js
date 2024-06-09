@@ -9,9 +9,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
 
 app.use(express.json());
 
-app.use(express.static("../build"));
+app.use(express.static("../public"));
 app.get("/", (req, res) => {
-    const path = resolve("../build" + "/index.html")
+    const path = resolve("../public" + "/index.html")
     res.sendFile(path);
 });
 app.get("/config", (req, res) => {

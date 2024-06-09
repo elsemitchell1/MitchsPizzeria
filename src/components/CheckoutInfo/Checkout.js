@@ -37,14 +37,14 @@ function Checkout() {
     const cartItems = useSelector((state) => state.cart.items);
 
     useEffect(() => {
-        fetch("/config").then(async (r) => {
+        fetch("https://pizzaserver-bqim.onrender.com/config").then(async (r) => {
             const { publishableKey } = await r.json();
             setStripePromise(loadStripe(publishableKey));
         });
     }, []);
 
     useEffect(() => {
-        fetch("/create-payment-intent", {
+        fetch("https://pizzaserver-bqim.onrender.com/create-payment-intent", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
