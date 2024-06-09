@@ -15,22 +15,26 @@ function QuantityButton({product}){
 
     const increment = () => {
         dispatch(incrementQuantity(product.id));
-        cartItem && dispatch(updateCartItem(cartItem, product.quantity + 1));
+        if (cartItem) {
+            dispatch(updateCartItem({ id: cartItem.id, quantity: cartItem.quantity + 1 }));
+        }
         setDisplayedQuantity(displayedQuantity + 1);
     }
 
     const decrement = () => {
         dispatch(decrementQuantity(product.id));
-        if(displayedQuantity > 0){
+        if (displayedQuantity > 0) {
             setDisplayedQuantity(displayedQuantity - 1);
-            cartItem && dispatch(updateCartItem(cartItem, product.quantity - 1));
+            if (cartItem) {
+                dispatch(updateCartItem({ id: cartItem.id, quantity: cartItem.quantity - 1 }));
+            }
         }
     }
 
     useEffect(() => {
-        setDisplayedQuantity(product.quantity);
         dispatch(updateProductItem(product.id, product.quantity));
-    }, [product.quantity, dispatch, product.id]);
+        setDisplayedQuantity(cartItem ? cartItem.quantity : product.quantity);
+    }, [product.quantity, dispatch, product.id, cartItem]);
 
     return (
         <QuantityWrapper>

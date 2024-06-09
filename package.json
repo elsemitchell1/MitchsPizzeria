@@ -4,6 +4,9 @@
   "private": true,
   "homepage": "https://elsemitchell1.github.io/MitchsPizzeria",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.3",
+    "@stripe/react-stripe-js": "^2.7.0",
+    "@stripe/stripe-js": "^3.3.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -17,7 +20,7 @@
     "react-scripts": "5.0.1",
     "react-share": "^4.4.1",
     "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2",
+    "stripe": "^15.4.0",
     "styled-components": "^6.0.4",
     "web-vitals": "^2.1.4"
   },
@@ -49,5 +52,6 @@
   },
   "devDependencies": {
     "gh-pages": "^5.0.0"
-  }
+  },
+  "proxy": "http://localhost:4242"
 }

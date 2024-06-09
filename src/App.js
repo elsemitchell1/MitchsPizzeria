@@ -11,15 +11,26 @@ import AboutPage from './pages/AboutPage/AboutPage';
 import Cart from './pages/CartPage/CartPage';
 import ProductPage from './pages/ProductPage/ProductPage';
 import CheckoutPage from './pages/CheckoutPage/Checkout';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from './actions/productActions';
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // Get the dispatch function
+  const { loading, error } = useSelector(state => state.products); // Get loading and error state from Redux store
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(fetchProducts()); // Dispatch the fetchProducts action when the component mounts
+  }, [dispatch]); // Ensure useEffect runs only once after mount
+
+  if (loading) {
+    // Render loading indicator while products are being fetched
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    // Render error message if there's an error fetching products
+    return <div>Error: {error.message}</div>;
+  }
   return (
       <HashRouter basename='/'>
         <GlobalStyle />

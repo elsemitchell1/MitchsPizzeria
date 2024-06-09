@@ -1,18 +1,6 @@
-export const addToCart = (product) => {
-    if(product.quantity < 1){
-        product.quantity = 1;
-    }
-    return { type: 'ADD_TO_CART', payload: product };
-};
-  
-export const removeFromCart = (product) => {
-    return { type: 'REMOVE_FROM_CART', payload: product };
-};
-  
-export const updateCartItem = (product, quantity) => {
-    return { type: 'UPDATE_CART_ITEM', payload: { id: product.id, quantity } };
-};
-  
-export const clearCart = () => {
-    return { type: 'CLEAR_CART' };
-};
+import { createAction } from '@reduxjs/toolkit';
+
+export const addToCart = createAction('cart/addToCart');
+export const removeFromCart = createAction('cart/removeFromCart');
+export const updateCartItem = createAction('cart/updateCartItem');
+export const clearCart = createAction('cart/clearCart');

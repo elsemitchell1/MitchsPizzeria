@@ -20,7 +20,7 @@ export const CheckoutTitle = styled.h1`
 export const FormContainer = styled.form`
   display: grid;
   margin: 10px auto;
-  width: 40%;
+  width: 100%;
   grid-gap: 16px;
   @media screen and (max-width: 960px) {
     width: 90%;
@@ -42,16 +42,15 @@ export const FormTextArea = styled.textarea`
 `;
 
 export const FormRow = styled.div`
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  align-items: center;
-  grid-gap: 8px;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const TotalLabel = styled.span`
   font-size: 20px;
   font-weight: bold;
   text-align: center;
+  margin: 20px 0px;
 `;
 
 export const TotalValue = styled.span`
@@ -98,6 +97,7 @@ export const OrderListUl = styled.ul`
   display: flex;
   flex-direction: column;
   color: #fff;
+  width: 400px;
   @media screen and (max-width: 960px) {
     font-size: 1.2rem;
   }
@@ -105,4 +105,50 @@ export const OrderListUl = styled.ul`
 
 export const OrderListLi = styled.li`
   margin: 5px 20px;
+`;
+
+export const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: ${({ column }) => (column ? 'column' : 'row')};
+  justify-content: ${({ justifyBetween }) => (justifyBetween ? 'space-between' : 'center')};
+  align-items: ${({ center }) => (center ? 'center' : 'flex-start')};
+  margin: ${({ margin }) => margin || '0'};
+  max-width: ${({ maxWidth }) => maxWidth || 'none'};
+  width: ${({ widthFull }) => (widthFull ? '100%' : 'auto')};
+  color: ${({ textWhite }) => (textWhite ? '#fff' : 'inherit')};
+`;
+
+export const SectionDiv = styled.div`
+  width: ${({ width }) => width || '50%'};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const Text3XL = styled.h3`
+  font-size: 2rem;
+  margin-bottom: ${({ mb }) => mb || '0'};
+`;
+
+export const TextBold = styled.div`
+  font-weight: bold;
+`;
+
+export const ButtonStyled = styled.button`
+  padding: 8px 16px;
+  background-color: #fb923c;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-top: 20px;
+
+  &:hover {
+    background-color: #fca311;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 `;

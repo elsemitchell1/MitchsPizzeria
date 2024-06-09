@@ -1,55 +1,56 @@
-const initialState = {
-    products: [],
-    loading: false,
-    error: null
-}
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchProducts } from '../actions/productActions';
 
-const productReducer = (state = initialState, action) => {
-    switch(action.type){
-        case 'FETCH_PRODUCTS_SUCCESS':
-            return{
-                ...state,
-                products: action.payload.map(product => ({
-                    ...product,
-                    quantity: 0,
-                })),
-                loading: false,
-                error: null
-            };
-        case 'FETCH_PRODUCTS_FAILURE':
-            return{
-                ...state,
-                products: [],
-                loading: false,
-                error: action.payload
-            }
-        case 'INCREMENT_QUANTITY':
-            return {
-              ...state,
-              products: state.products.map(product =>
-                product.id === action.payload
-                  ? { ...product, quantity: product.quantity + 1 }
-                  : product
-              ),
-            };
-        case 'DECREMENT_QUANTITY':
-            return {
-                ...state,
-                products: state.products.map(product =>
-                product.id === action.payload
-                    ? { ...product, quantity: Math.max(product.quantity - 1, 0) }
-                    : product
-                ),
-            };
-        case 'UPDATE_PRODUCT_ITEM':
-            return {
-                ...state,
-                products: state.products.map(product =>
-                    product.id === action.payload.id ? { ...product, quantity: action.payload.quantity } : product
-                ),
-            };
-        default:
-            return state;
-    }
-}
-export default productReducer;
+const initialState = {
+  products: [],
+  loading: false,
+  error: null
+};
+
+const productSlice = createSlice({
+  name: 'products',
+  initialState,
+  reducers: {
+    incrementQuantity: (state, action) => {
+        const product = state.products.find(product => product.id === action.payload);
+        if (product) {
+          product.quantity += 1;
+        }
+    },
+    decrementQuantity: (state, action) => {
+        const product = state.products.find(product => product.id === action.payload);
+        if (product) {
+          product.quantity = Math.max(product.quantity - 1, 0);
+        }
+    },
+    updateProductItem: (state, action) => {
+        const product = state.products.find(product => product.id === action.payload.id);
+        if (product) {
+          product.quantity = action.payload.quantity;
+        }
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.products = [];
+        state.loading = false;
+        state.error = action.error.message;
+      });
+  },
+});
+
+export const selectProducts = state => state.products.products;
+
+export const { fetchProductsSuccess, fetchProductsFailure, incrementQuantity, decrementQuantity, updateProductItem } = productSlice.actions;
+
+export default productSlice.reducer;
