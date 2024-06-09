@@ -8,11 +8,14 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
 });
 
 app.use(express.json());
+const staticDir = path.resolve(__dirname, "../", process.env.STATIC_DIR);
+if(!staticDir){
+    throw new Error("STATIC_DIR environment variable is not defined");
+}
 
 app.use(express.static(process.env.STATIC_DIR));
 app.get("/", (req, res) => {
-    const path = resolve(process.env.STATIC_DIR + "/index.html");
-    res.sendFile(path);
+    res.sendFile(path.resolve(staticDir, "index.html"));
 });
 app.get("/config", (req, res) => {
     res.send({
