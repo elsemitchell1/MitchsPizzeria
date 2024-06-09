@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const {resolve} = require("path");
-const env = require("dotenv").config({path: "./.env"});
+const env = require("dotenv").config();
 // This is your test secret API key.
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2022-08-01",
@@ -16,8 +16,10 @@ app.get("/", (req, res) => {
     const path = resolve("../public" + "/index.html")
     res.sendFile(path);
 });
+
+console.log(env.STRIPE_PUBLISHABLE_KEY);
+console.log(process.env.STRIPE_PUBLISHABLE_KEY);
 app.get("/config", (req, res) => {
-    console.log(env.STRIPE_PUBLISHABLE_KEY);
     res.send({
         publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     });
