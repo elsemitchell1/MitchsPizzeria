@@ -2,25 +2,15 @@ import React, { useEffect, useState } from "react";
 import { firestore } from "../../firebase";
 import { addDoc, collection, getDocs, where, query } from "@firebase/firestore";
 import {
-    CheckoutContainer,
     CheckoutTitle,
-    FormContainer,
-    FormRow,
-    FormLabel,
-    FormInput,
-    FormTextArea,
-    TotalValue,
-    SubmitButton,
-    TotalLabel,
-    OrderComplete,
-    OrderCompleteH1,
     OrderListUl,
     OrderListLi,
-    FlexDiv,
+    FlexRow,
+    FlexCol,
     SectionDiv,
     Text3XL,
-    TextBold,
-    ButtonStyled
+    OrderRow,
+    OrderCell,
 } from "./Checkout.element";
 import { Button } from "../../globalStyles";
 import { useDispatch, useSelector } from "react-redux";
@@ -77,14 +67,14 @@ function Checkout() {
             <OrderListUl>
                 {cartItems.map((item) => (
                     <OrderListLi key={item.name}>
-                        <FlexDiv justifyBetween>
-                            <FlexDiv>
+                        <OrderRow>
+                            <OrderCell>
                                 {item.quantity} x {item.name} - {item.productType}
-                            </FlexDiv>
-                            <FlexDiv>
+                            </OrderCell>
+                            <OrderCell>
                                 {(item.quantity * item.price).toLocaleString("en-CA", { style: "currency", currency: "CAD" })}
-                            </FlexDiv>
-                        </FlexDiv>
+                            </OrderCell>
+                        </OrderRow>
                     </OrderListLi>
                 ))}
             </OrderListUl>
@@ -92,22 +82,22 @@ function Checkout() {
     }
 
     return (
-        <FlexDiv column margin="40px" textWhite center>
+        <FlexCol>
             <CheckoutTitle>Checkout</CheckoutTitle>
-            <FlexDiv justifyBetween maxWidth="1280px" widthFull>
+            <FlexRow>
                 <SectionDiv>
-                    <Text3XL mb="24px">Order Details:</Text3XL>
+                    <Text3XL>Order Details:</Text3XL>
                     {cart()}
                 </SectionDiv>
                 <SectionDiv>
                     {stripePromise && clientSecret && (
                         <Elements stripe={stripePromise} options={{ clientSecret }}>
-                            <CheckoutForm cartItems={cartItems} />
+                        <CheckoutForm cartItems={cartItems} />
                         </Elements>
                     )}
                 </SectionDiv>
-            </FlexDiv>
-        </FlexDiv>
+            </FlexRow>
+        </FlexCol>
     );
 }
 

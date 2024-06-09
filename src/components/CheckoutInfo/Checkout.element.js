@@ -20,7 +20,7 @@ export const CheckoutTitle = styled.h1`
 export const FormContainer = styled.form`
   display: grid;
   margin: 10px auto;
-  width: 100%;
+  width: 290px;
   grid-gap: 16px;
   @media screen and (max-width: 960px) {
     width: 90%;
@@ -107,19 +107,42 @@ export const OrderListLi = styled.li`
   margin: 5px 20px;
 `;
 
-export const FlexDiv = styled.div`
+export const FlexRow = styled.div`
   display: flex;
-  flex-direction: ${({ column }) => (column ? 'column' : 'row')};
-  justify-content: ${({ justifyBetween }) => (justifyBetween ? 'space-between' : 'center')};
-  align-items: ${({ center }) => (center ? 'center' : 'flex-start')};
-  margin: ${({ margin }) => margin || '0'};
-  max-width: ${({ maxWidth }) => maxWidth || 'none'};
-  width: ${({ widthFull }) => (widthFull ? '100%' : 'auto')};
-  color: ${({ textWhite }) => (textWhite ? '#fff' : 'inherit')};
+  flex-direction: row;
+  justify-content: center;
+  margin: 0;
+  max-width: none;
+  width: 100%;
+  color: white;
+`;
+
+export const OrderCell = styled.div`
+`;
+
+export const OrderRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0;
+  max-width: none;
+  width: 100%;
+  color: white;
+`;
+
+export const FlexCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  max-width: none;
+  width: 100%;
+  color: white;
 `;
 
 export const SectionDiv = styled.div`
-  width: ${({ width }) => width || '50%'};
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -127,7 +150,7 @@ export const SectionDiv = styled.div`
 
 export const Text3XL = styled.h3`
   font-size: 2rem;
-  margin-bottom: ${({ mb }) => mb || '0'};
+  margin-bottom: 20px;
 `;
 
 export const TextBold = styled.div`

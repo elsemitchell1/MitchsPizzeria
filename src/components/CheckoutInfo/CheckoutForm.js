@@ -55,8 +55,8 @@ function CheckoutForm({ cartItems }) {
     };
 
     return (
-        <SectionDiv column center width="288px">
-            <Text3XL mb="24px">Payment Details:</Text3XL>
+        <SectionDiv>
+            <Text3XL>Payment Details:</Text3XL>
             <FormContainer onSubmit={handleSubmit}>
                 <FormRow>
                     <FormLabel htmlFor="name">Name:</FormLabel>
