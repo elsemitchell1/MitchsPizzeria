@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const path = require("path");
+const {resolve} = require("path");
 const env = require("dotenv").config({path: "./.env"});
 // This is your test secret API key.
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
@@ -8,11 +8,11 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
 });
 
 app.use(express.json());
-const staticDir = path.resolve(__dirname, "../build");
 
-app.use(express.static(staticDir));
+app.use(express.static("../build"));
 app.get("/", (req, res) => {
-    res.sendFile(path.resolve(staticDir, "index.html"));
+    const path = resolve("../build" + "/index.html")
+    res.sendFile(path);
 });
 app.get("/config", (req, res) => {
     res.send({
