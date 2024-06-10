@@ -23,6 +23,7 @@ function Checkout() {
     const [clientSecret, setClientSecret] = useState("");
     const [loading, setLoading] = useState(true);
     const [selectedProvince, setSelectedProvince] = useState("");
+    const [paymentIntentId, setPaymentIntentId] = useState(null);
     const cartItems = useSelector((state) => state.cart.items);
 
     useEffect(() => {
@@ -37,7 +38,7 @@ function Checkout() {
         };
 
         fetchPublishableKey();
-    }, [selectedProvince]);
+    }, []);
 
     useEffect(() => {
         const createPaymentIntent = async () => {
@@ -47,7 +48,7 @@ function Checkout() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({items: cartItems, province: selectedProvince}),
+                    body: JSON.stringify({items: cartItems}),
                 });
                 console.log(response);
 
@@ -56,8 +57,9 @@ function Checkout() {
                     throw new Error(error.error.message);
                 }
 
-                const { clientSecret: fetchedClientSecret } = await response.json();
+                const { clientSecret: fetchedClientSecret, paymentIntentId: fetchedPaymentIntentId } = await response.json();
                 setClientSecret(fetchedClientSecret);
+                setPaymentIntentId(fetchedPaymentIntentId);
             } catch (error) {
                 console.error("Error creating payment intent:", error.message);
             } finally {
@@ -66,7 +68,35 @@ function Checkout() {
         };
 
         createPaymentIntent();
-    }, [cartItems, selectedProvince]);
+    }, [cartItems]);
+
+    useEffect(() => {
+        const updatePaymentIntent = async () => {
+            if (!paymentIntentId || !selectedProvince) return;
+
+            try {
+                const response = await fetch("https://pizzaserver-bqim.onrender.com/update-payment-intent", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ paymentIntentId: paymentIntentId, items: cartItems, province: selectedProvince }),
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error.message);
+                }
+
+                const { clientSecret: updatedClientSecret } = await response.json();
+                setClientSecret(updatedClientSecret);
+            } catch (error) {
+                console.error("Error updating payment intent:", error.message);
+            }
+        };
+
+        updatePaymentIntent();
+    }, [paymentIntentId, selectedProvince, cartItems]);
 
     const cart = () => {
         return (

@@ -48,16 +48,12 @@ app.post("/create-payment-intent", async (req, res) => {
 
     try {
         const items = req.body.items;
-        const province = req.body.province;
-        const amount = calculateOrderAmount(items);
-        const tax = calculateTax(amount, province);
-        const totalAmount = Math.round(amount + tax);
         const description = constructOrderDescription(items);
 
         // Create a PaymentIntent with the order amount and currency
         const paymentIntent = await stripe.paymentIntents.create({
             currency: "cad",
-            amount: totalAmount,
+            amount: calculateOrderAmount(items),
             description: description,
             automatic_payment_methods: {
                 enabled: true,
@@ -77,5 +73,32 @@ app.post("/create-payment-intent", async (req, res) => {
     }
 });
 
+app.post("/update-payment-intent", async (req, res) => {
+    try {
+        const items = req.body.items;
+        const province = req.body.province;
+        const paymentIntentId = req.body.paymentIntentId;
+        const amount = calculateOrderAmount(items);
+        const tax = calculateTax(amount, province);
+        const totalAmount = Math.round(amount + tax);
+        const description = constructOrderDescription(items);
+
+        // Update the payment intent with the new total amount
+        const updatedPaymentIntent = await stripe.paymentIntents.update(paymentIntentId, {
+            amount: totalAmount,
+            description: description,
+        });
+
+        res.send({
+            clientSecret: updatedPaymentIntent.client_secret,
+        });
+    } catch (e) {
+        return res.status(400).send({
+            error: {
+                message: e.message,
+            },
+        });
+    }
+});
 
 app.listen(4242, () => console.log("Node server listening on port 4242!"));
