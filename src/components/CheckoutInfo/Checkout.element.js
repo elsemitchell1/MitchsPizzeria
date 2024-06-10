@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 
 export const CheckoutContainer = styled.div`
   padding: 16px;
@@ -18,13 +18,11 @@ export const CheckoutTitle = styled.h1`
 `;
 
 export const FormContainer = styled.form`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   margin: 10px auto;
   width: 290px;
   grid-gap: 16px;
-  @media screen and (max-width: 960px) {
-    width: 90%;
-  }
 `;
 
 export const FormLabel = styled.label`
@@ -44,6 +42,7 @@ export const FormTextArea = styled.textarea`
 export const FormRow = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 300px;
 `;
 
 export const TotalLabel = styled.span`
@@ -115,6 +114,9 @@ export const FlexRow = styled.div`
   max-width: none;
   width: 100%;
   color: white;
+  @media screen and (max-width:960px){
+    flex-direction: column;
+  }
 `;
 
 export const OrderCell = styled.div`
@@ -135,8 +137,8 @@ export const FlexCol = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0;
-  max-width: none;
+  margin: 0 auto;
+  max-width: 1200px;
   width: 100%;
   color: white;
 `;
@@ -146,11 +148,14 @@ export const SectionDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width:1100px){
+    width: 100%;
+  }
 `;
 
 export const Text3XL = styled.h3`
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin: 20px 0;
 `;
 
 export const TextBold = styled.div`
@@ -174,4 +179,40 @@ export const ButtonStyled = styled.button`
     background-color: #ccc;
     cursor: not-allowed;
   }
+`;
+
+
+export const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+export const Spinner = styled.div`
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-top: 8px solid #a40606;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: ${spin} 1s linear infinite;
+`;
+
+export const LoadingMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 1.2rem;
+`;
+
+export const PaymentLoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 `;

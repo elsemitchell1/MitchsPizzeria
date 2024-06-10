@@ -10,7 +10,8 @@ import {
     TotalLabel,
     ButtonStyled,
     Text3XL,
-    SectionDiv
+    SectionDiv,
+    OrderCell
 } from './Checkout.element';
 
 function CheckoutForm({ cartItems }) {
@@ -40,7 +41,7 @@ function CheckoutForm({ cartItems }) {
             const { error, paymentIntent } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: `${window.location.origin}/Checkout`,
+                    return_url: `${window.location.origin}/#/PaymentSuccess`,
                 },
             });
 
@@ -88,9 +89,9 @@ function CheckoutForm({ cartItems }) {
                     />
                 </FormRow>
             </FormContainer>
-            <div>
+            <OrderCell>
                 <PaymentElement />
-            </div>
+            </OrderCell>
             <TotalLabel>Total:
                 <TotalValue>{totalPrice()}</TotalValue>
             </TotalLabel>

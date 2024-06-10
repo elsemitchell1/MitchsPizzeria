@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { firestore } from "../../firebase";
-import { addDoc, collection, getDocs, where, query } from "@firebase/firestore";
 import {
     CheckoutTitle,
     OrderListUl,
@@ -11,12 +9,11 @@ import {
     Text3XL,
     OrderRow,
     OrderCell,
+    PaymentLoadingContainer,
+    Spinner,
+    LoadingMessage,
 } from "./Checkout.element";
-import { Button } from "../../globalStyles";
-import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../../actions/cartActions";
-import { useNavigate } from "react-router-dom";
-import { updateProductItem } from "../../actions/productActions";
+import { useSelector } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
@@ -24,43 +21,50 @@ import CheckoutForm from "./CheckoutForm";
 function Checkout() {
     const [stripePromise, setStripePromise] = useState(null);
     const [clientSecret, setClientSecret] = useState("");
+    const [loading, setLoading] = useState(true);
     const cartItems = useSelector((state) => state.cart.items);
 
     useEffect(() => {
-        fetch("https://pizzaserver-bqim.onrender.com/config").then(async (r) => {
-            const { publishableKey } = await r.json();
-            setStripePromise(loadStripe(publishableKey));
-        });
+        const fetchPublishableKey = async () => {
+            try {
+                const response = await fetch("https://pizzaserver-bqim.onrender.com/config");
+                const { publishableKey } = await response.json();
+                setStripePromise(loadStripe(publishableKey));
+            } catch (error) {
+                console.error("Error fetching publishable key:", error);
+            }
+        };
+
+        fetchPublishableKey();
     }, []);
 
     useEffect(() => {
-        fetch("https://pizzaserver-bqim.onrender.com/create-payment-intent", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(cartItems),
-        }).then(async (r) => {
-            if (!r.ok) {
-                const error = await r.json();
-                throw new Error(error.error.message);
+        const createPaymentIntent = async () => {
+            try {
+                const response = await fetch("https://pizzaserver-bqim.onrender.com/create-payment-intent", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cartItems),
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error.message);
+                }
+
+                const { clientSecret: fetchedClientSecret } = await response.json();
+                setClientSecret(fetchedClientSecret);
+            } catch (error) {
+                console.error("Error creating payment intent:", error.message);
+            } finally {
+                setLoading(false);
             }
-            const { clientSecret: fetchedClientSecret } = await r.json();
-            setClientSecret(fetchedClientSecret);
-        }).catch((error) => {
-            console.error("Error creating payment intent:", error.message);
-        });
-    }, []);
+        };
 
-    const products = useSelector((state) => state.products.products);
-
-    const totalPrice = () => {
-        let total = 0;
-        for (const item of cartItems) {
-            total += item.price * item.quantity;
-        }
-        return total.toLocaleString("en-CA", { style: "currency", currency: "CAD" });
-    }
+        createPaymentIntent();
+    }, [cartItems]);
 
     const cart = () => {
         return (
@@ -90,10 +94,17 @@ function Checkout() {
                     {cart()}
                 </SectionDiv>
                 <SectionDiv>
-                    {stripePromise && clientSecret && (
-                        <Elements stripe={stripePromise} options={{ clientSecret }}>
-                        <CheckoutForm cartItems={cartItems} />
-                        </Elements>
+                    {loading ? (
+                        <PaymentLoadingContainer>
+                            <Spinner/>
+                            <LoadingMessage>Payment Loading...</LoadingMessage>
+                        </PaymentLoadingContainer>
+                    ) : (
+                        stripePromise && clientSecret && (
+                            <Elements stripe={stripePromise} options={{ clientSecret }}>
+                            <CheckoutForm cartItems={cartItems} />
+                            </Elements>
+                        )
                     )}
                 </SectionDiv>
             </FlexRow>

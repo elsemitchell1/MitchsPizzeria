@@ -13,6 +13,7 @@ import ProductPage from './pages/ProductPage/ProductPage';
 import CheckoutPage from './pages/CheckoutPage/Checkout';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from './actions/productActions';
+import PaymentSuccess from './pages/PaymentSuccess/PaymentSuccess';
 
 function App() {
   const dispatch = useDispatch(); // Get the dispatch function
@@ -44,6 +45,7 @@ function App() {
           <Route path='/Cart' element={<Cart/>}/>
           <Route path='/ProductInfo' element={<ProductPage/>}/>
           <Route path='/Checkout' element={<CheckoutPage/>}/>
+          <Route path='/PaymentSuccess' element={<PaymentSuccess/>}/>
         </Routes>
       </HashRouter>
   );
