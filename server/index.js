@@ -40,18 +40,6 @@ app.post("/create-payment-intent", async (req, res) => {
             automatic_payment_methods: {
                 enabled: true,
             },
-            fields:{
-                billingDetails: {
-                    name: 'auto', // Placeholder name; will be replaced by the actual customer name
-                    address: {
-                        line1: 'auto',
-                        city: 'auto',
-                        state: 'auto',
-                        postal_code: 'auto',
-                        country: 'auto',
-                    },
-                }
-            }
             // You can add more parameters here as needed
         });
 
