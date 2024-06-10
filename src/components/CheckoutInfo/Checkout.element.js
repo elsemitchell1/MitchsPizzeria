@@ -216,3 +216,11 @@ export const PaymentLoadingContainer = styled.div`
   justify-content: center;
   height: 100%;
 `;
+
+export const PaymentSuccessDiv = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+color: white;
+margin-top: 20px;
+`
