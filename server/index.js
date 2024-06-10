@@ -27,6 +27,7 @@ const constructOrderDescription = (items) => {
     return items.map(item => `${item.quantity} x ${item.name}`).join(", ");
 };
 const calculateTax = (amount, province) => {
+    console.log(province);
     const taxRate = taxRates[province] || 0;
     return amount * taxRate;
 }
