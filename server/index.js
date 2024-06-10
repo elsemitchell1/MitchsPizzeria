@@ -50,7 +50,7 @@ app.post("/create-payment-intent", async (req, res) => {
     try {
         console.log(req.body);
         const items = req.body.items;
-        const province = req.body.items;
+        const province = req.body.province;
         console.log("Items: " + items + ", Province: " + province);
         const amount = calculateOrderAmount(items);
         const tax = calculateTax(amount, province);
