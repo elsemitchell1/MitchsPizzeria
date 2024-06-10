@@ -41,7 +41,7 @@ function CheckoutForm({ cartItems }) {
             const { error, paymentIntent } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url: `${window.location.origin}MitchsPizzeria/#/PaymentSuccess`,
+                    return_url: `${window.location.origin}/MitchsPizzeria/#/PaymentSuccess`,
                 },
             });
 
