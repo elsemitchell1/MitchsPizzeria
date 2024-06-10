@@ -28,7 +28,7 @@ const constructOrderDescription = (items) => {
 };
 const calculateTax = (amount, province) => {
     console.log(province);
-    const taxRate = taxRates[province] || 0;
+    const taxRate = taxRates.province || 0;
     return amount * taxRate;
 }
 
