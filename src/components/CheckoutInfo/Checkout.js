@@ -37,7 +37,7 @@ function Checkout() {
         };
 
         fetchPublishableKey();
-    }, []);
+    }, [selectedProvince]);
 
     useEffect(() => {
         const createPaymentIntent = async () => {

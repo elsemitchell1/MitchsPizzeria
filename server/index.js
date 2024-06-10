@@ -51,7 +51,7 @@ app.post("/create-payment-intent", async (req, res) => {
         const province = req.body.province;
         const amount = calculateOrderAmount(items);
         const tax = calculateTax(amount, province);
-        const totalAmount = Math.round(amount + tax) * 100;
+        const totalAmount = Math.round(amount + tax);
         const description = constructOrderDescription(items);
 
         // Create a PaymentIntent with the order amount and currency
