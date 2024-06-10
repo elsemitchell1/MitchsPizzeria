@@ -47,11 +47,9 @@ function Checkout() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body:{
-                        items: JSON.stringify(cartItems),
-                        province: JSON.stringify(selectedProvince),
-                    }
+                    body: JSON.stringify({items: cartItems, province: selectedProvince}),
                 });
+                console.log(response);
 
                 if (!response.ok) {
                     const error = await response.json();

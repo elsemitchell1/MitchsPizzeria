@@ -48,8 +48,9 @@ const calculateOrderAmount = (items) => {
 app.post("/create-payment-intent", async (req, res) => {
 
     try {
+        console.log(req.body);
         const items = req.body.items;
-        const province = req.body.province;
+        const province = req.body.items;
         console.log("Items: " + items + ", Province: " + province);
         const amount = calculateOrderAmount(items);
         const tax = calculateTax(amount, province);
