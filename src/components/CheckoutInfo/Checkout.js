@@ -47,7 +47,8 @@ function Checkout() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(cartItems, selectedProvince),
+                    items: JSON.stringify(cartItems),
+                    province: JSON.stringify(selectedProvince),
                 });
 
                 if (!response.ok) {
