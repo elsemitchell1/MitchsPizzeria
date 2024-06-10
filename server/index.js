@@ -40,6 +40,17 @@ app.post("/create-payment-intent", async (req, res) => {
             automatic_payment_methods: {
                 enabled: true,
             },
+            shipping: {
+                allowed_countries: ['US', 'CA'], // Add more countries as needed
+                name: 'Customer Name', // Placeholder name; will be replaced by the actual customer name
+                address: {
+                    line1: 'Address line 1',
+                    city: 'City',
+                    state: 'State',
+                    postal_code: 'Postal Code',
+                    country: 'Country',
+                },
+            }
             // You can add more parameters here as needed
         });
 
