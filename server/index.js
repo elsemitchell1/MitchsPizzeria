@@ -28,7 +28,6 @@ const constructOrderDescription = (items) => {
 };
 const calculateTax = (amount, province) => {
     const taxRate = taxRates[province] || 0;
-    console.log(taxRates[province]);
     return amount * taxRate;
 }
 
@@ -48,13 +47,11 @@ const calculateOrderAmount = (items) => {
 app.post("/create-payment-intent", async (req, res) => {
 
     try {
-        console.log(req.body);
         const items = req.body.items;
         const province = req.body.province;
-        console.log("Items: " + items + ", Province: " + province);
         const amount = calculateOrderAmount(items);
         const tax = calculateTax(amount, province);
-        const totalAmount = amount + tax;
+        const totalAmount = Math.round(amount + tax) * 100;
         const description = constructOrderDescription(items);
 
         // Create a PaymentIntent with the order amount and currency
