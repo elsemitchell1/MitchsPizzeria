@@ -22,6 +22,7 @@ function Checkout() {
     const [stripePromise, setStripePromise] = useState(null);
     const [clientSecret, setClientSecret] = useState("");
     const [loading, setLoading] = useState(true);
+    const [selectedProvince, setSelectedProvince] = useState("");
     const cartItems = useSelector((state) => state.cart.items);
 
     useEffect(() => {
@@ -46,7 +47,7 @@ function Checkout() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(cartItems),
+                    body: JSON.stringify({items: cartItems, province: selectedProvince}),
                 });
 
                 if (!response.ok) {
@@ -64,7 +65,7 @@ function Checkout() {
         };
 
         createPaymentIntent();
-    }, [cartItems]);
+    }, [cartItems, selectedProvince]);
 
     const cart = () => {
         return (
@@ -102,7 +103,7 @@ function Checkout() {
                     ) : (
                         stripePromise && clientSecret && (
                             <Elements stripe={stripePromise} options={{ clientSecret }}>
-                            <CheckoutForm cartItems={cartItems} />
+                            <CheckoutForm cartItems={cartItems} setSelectedProvince={setSelectedProvince} />
                             </Elements>
                         )
                     )}

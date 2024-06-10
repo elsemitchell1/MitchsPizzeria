@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { PaymentElement, useStripe, useElements, AddressElement } from "@stripe/react-stripe-js";
 import {
     FormContainer,
     FormRow,
@@ -14,7 +14,7 @@ import {
     OrderCell
 } from './Checkout.element';
 
-function CheckoutForm({ cartItems }) {
+function CheckoutForm({ cartItems, setSelectedProvince }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
@@ -55,11 +55,16 @@ function CheckoutForm({ cartItems }) {
         }
     };
 
+    const handleAddressChange = (e) => {
+        const address = e.value.address;
+        setSelectedProvince(address.state);
+    }
+
     return (
         <SectionDiv>
             <Text3XL>Payment Details:</Text3XL>
             <FormContainer onSubmit={handleSubmit}>
-                <FormRow>
+                {/*<FormRow>
                     <FormLabel htmlFor="name">Name:</FormLabel>
                     <FormInput
                         type="text"
@@ -68,7 +73,7 @@ function CheckoutForm({ cartItems }) {
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
-                </FormRow>
+                </FormRow>*/}
                 <FormRow>
                     <FormLabel htmlFor="email">Email:</FormLabel>
                     <FormInput
@@ -79,7 +84,7 @@ function CheckoutForm({ cartItems }) {
                         required
                     />
                 </FormRow>
-                <FormRow>
+                {/*<FormRow>
                     <FormLabel htmlFor="address">Address:</FormLabel>
                     <FormTextArea
                         id="address"
@@ -87,9 +92,13 @@ function CheckoutForm({ cartItems }) {
                         onChange={(e) => setAddress(e.target.value)}
                         required
                     />
-                </FormRow>
+                </FormRow>*/}
             </FormContainer>
             <OrderCell>
+                <AddressElement options={{
+                    mode: "shipping",
+                    allowedCountries: ['CA'],
+                }} onChange={handleAddressChange}/>
                 <PaymentElement />
             </OrderCell>
             <TotalLabel>Total:

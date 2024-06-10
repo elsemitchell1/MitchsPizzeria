@@ -16,6 +16,21 @@ app.get("/", (req, res) => {
     res.sendFile(path);
 });
 
+const taxRates = {
+    "ON": 0.13,
+    "QC": 0.14975,
+    "BC": 0.12,
+    "AB": 0.05,
+}
+
+const constructOrderDescription = (items) => {
+    return items.map(item => `${item.quantity} x ${item.name}`).join(", ");
+};
+const calculateTax = (amount, province) => {
+    const taxRate = taxRates[province] || 0;
+    return amount * taxRate;
+}
+
 app.get("/config", (req, res) => {
     res.send({
         publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
@@ -32,11 +47,17 @@ const calculateOrderAmount = (items) => {
 app.post("/create-payment-intent", async (req, res) => {
 
     try {
-        const items = req.body;
+        const {items, province} = req.body;
+        const amount = calculateOrderAmount(items);
+        const tax = calculateTax(amount, province);
+        const totalAmount = amount + tax;
+        const description = constructOrderDescription(items);
+
         // Create a PaymentIntent with the order amount and currency
         const paymentIntent = await stripe.paymentIntents.create({
             currency: "cad",
-            amount: calculateOrderAmount(items),
+            amount: totalAmount,
+            description: description,
             automatic_payment_methods: {
                 enabled: true,
             },
