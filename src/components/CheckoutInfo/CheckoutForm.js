@@ -83,8 +83,9 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
                 console.error(error);
             } else if (paymentIntent.status === 'succeeded') {
                 console.log("success");
-                dispatch(clearCart());
             }
+
+            dispatch(clearCart());
         } catch (error) {
             console.error('Error:', error);
         }
