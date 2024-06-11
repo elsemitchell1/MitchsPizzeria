@@ -18,9 +18,18 @@ app.get("/", (req, res) => {
 
 const taxRates = {
     ON: 0.13,
-    QC: 0.14975,
     BC: 0.12,
     AB: 0.05,
+    MB: 0.12,
+    NB: 0.15,
+    NL: 0.15,
+    NT: 0.05,
+    NS: 0.15,
+    NU: 0.05,
+    PE: 0.15,
+    QC: 0.14975,
+    SK: 0.11,
+    YT: 0.05,
 }
 
 const constructOrderDescription = (items) => {
