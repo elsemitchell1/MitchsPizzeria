@@ -74,6 +74,7 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
                 elements,
                 confirmParams: {
                     return_url: `${window.location.origin}/MitchsPizzeria/#/PaymentSuccess`,
+                    receipt_email: email,
                 },
             });
 
