@@ -13,8 +13,6 @@ import {
     OrderCell,
     SubmitButton
 } from './Checkout.element';
-import { clearCart } from "../../actions/cartActions";
-import { useDispatch } from "react-redux";
 
 const TAX_RATES = {
     ON: 0.13,
@@ -40,7 +38,7 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
     const stripe = useStripe();
     const elements = useElements();
 
-    const dispatch = useDispatch();
+
 
 
     const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -84,8 +82,6 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
             } else if (paymentIntent.status === 'succeeded') {
                 console.log("success");
             }
-
-            dispatch(clearCart());
         } catch (error) {
             console.error('Error:', error);
         }
