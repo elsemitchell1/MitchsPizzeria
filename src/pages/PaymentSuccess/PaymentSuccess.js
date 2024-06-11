@@ -15,7 +15,9 @@ function PaymentSuccess() {
     }
 
     useEffect(() => {
-        window.history.replaceState({}, document.title, window.location.hash.replace(/^#/, '#/'));
+        const hashIndex = window.location.href.indexOf('#');
+        const baseUrl = hashIndex !== -1 ? window.location.href.substring(0, hashIndex) : window.location.href;
+        window.history.replaceState({}, document.title, baseUrl);
         clearItems();
         // eslint-disable-next-line
     },[]); 
