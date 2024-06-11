@@ -50,7 +50,6 @@ function Checkout() {
                     },
                     body: JSON.stringify({items: cartItems}),
                 });
-                console.log(response);
 
                 if (!response.ok) {
                     const error = await response.json();
@@ -60,7 +59,6 @@ function Checkout() {
                 const { clientSecret: fetchedClientSecret, paymentIntentId: fetchedPaymentIntentId } = await response.json();
                 setClientSecret(fetchedClientSecret);
                 setPaymentIntentId(fetchedPaymentIntentId);
-                console.log(paymentIntentId);
             } catch (error) {
                 console.error("Error creating payment intent:", error.message);
             } finally {

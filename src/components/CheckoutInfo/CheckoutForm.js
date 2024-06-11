@@ -5,7 +5,6 @@ import {
     FormRow,
     FormLabel,
     FormInput,
-    FormTextArea,
     TotalValue,
     TotalLabel,
     ButtonStyled,
@@ -15,9 +14,7 @@ import {
 } from './Checkout.element';
 
 function CheckoutForm({ cartItems, setSelectedProvince }) {
-    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
     const stripe = useStripe();
     const elements = useElements();
 
@@ -64,16 +61,6 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
         <SectionDiv>
             <Text3XL>Payment Details:</Text3XL>
             <FormContainer onSubmit={handleSubmit}>
-                {/*<FormRow>
-                    <FormLabel htmlFor="name">Name:</FormLabel>
-                    <FormInput
-                        type="text"
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </FormRow>*/}
                 <FormRow>
                     <FormLabel htmlFor="email">Email:</FormLabel>
                     <FormInput
@@ -84,15 +71,6 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
                         required
                     />
                 </FormRow>
-                {/*<FormRow>
-                    <FormLabel htmlFor="address">Address:</FormLabel>
-                    <FormTextArea
-                        id="address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        required
-                    />
-                </FormRow>*/}
             </FormContainer>
             <OrderCell>
                 <AddressElement options={{
