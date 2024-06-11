@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/MitchsPizzeria/static/js/main.376a55b0.js",
+    "main.js": "/MitchsPizzeria/static/js/main.ed37cb9a.js",
     "static/js/787.0d53c42f.chunk.js": "/MitchsPizzeria/static/js/787.0d53c42f.chunk.js",
     "index.html": "/MitchsPizzeria/index.html",
-    "main.376a55b0.js.map": "/MitchsPizzeria/static/js/main.376a55b0.js.map",
+    "main.ed37cb9a.js.map": "/MitchsPizzeria/static/js/main.ed37cb9a.js.map",
     "787.0d53c42f.chunk.js.map": "/MitchsPizzeria/static/js/787.0d53c42f.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.376a55b0.js"
+    "static/js/main.ed37cb9a.js"
   ]
 }
