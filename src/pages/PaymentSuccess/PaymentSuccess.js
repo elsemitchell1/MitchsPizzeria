@@ -15,9 +15,7 @@ function PaymentSuccess() {
     }
 
     useEffect(() => {
-        const hashIndex = window.location.href.indexOf('#');
-        const baseUrl = hashIndex !== -1 ? window.location.href.substring(0, hashIndex) : window.location.href;
-        window.history.replaceState({}, document.title, baseUrl);
+        window.history.replaceState({}, document.title, window.location.pathname + "#/PaymentSuccess");
         clearItems();
         // eslint-disable-next-line
     },[]); 
