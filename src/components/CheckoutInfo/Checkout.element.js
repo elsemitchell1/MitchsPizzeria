@@ -49,20 +49,28 @@ export const TotalLabel = styled.span`
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  margin: 20px 0px;
+  margin: 10px 0px 10px auto;
 `;
 
 export const TotalValue = styled.span`
-  font-weight: bold;
+  font-weight: 100;
   margin-left: 10px;
+`;
+
+export const TotalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 20px auto;
 `;
 
 export const SubmitButton = styled.button`
   padding: 8px 16px;
   background-color: #fca311;
   width: 120px;
-  margin: auto;
+  margin: 0 auto 50px;
   color: #fff;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   font-weight: bold;
@@ -223,4 +231,14 @@ flex-direction: column;
 align-items: center;
 color: white;
 margin-top: 20px;
-`
+`;
+
+export const SuccessTitle = styled.h4`
+margin: 10px auto;
+font-size: 2rem;
+`;
+
+export const SuccessText = styled.h5`
+font-size: 1rem;
+margin: 20px 0;
+`;

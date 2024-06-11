@@ -1,11 +1,11 @@
 import React from 'react';
-import { CheckoutTitle, PaymentSuccessDiv, Text3XL } from '../../components/CheckoutInfo/Checkout.element';
+import { SuccessTitle, PaymentSuccessDiv, SuccessText } from '../../components/CheckoutInfo/Checkout.element';
 
 function PaymentSuccess() {
     return (
         <PaymentSuccessDiv>
-            <CheckoutTitle>Payment Successful</CheckoutTitle>
-            <Text3XL>Thank you for your purchase!</Text3XL>
+            <SuccessTitle>Payment Successful</SuccessTitle>
+            <SuccessText>Thank you for your purchase!</SuccessText>
         </PaymentSuccessDiv>
     );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PaymentElement, useStripe, useElements, AddressElement } from "@stripe/react-stripe-js";
 import {
     FormContainer,
@@ -7,24 +7,49 @@ import {
     FormInput,
     TotalValue,
     TotalLabel,
-    ButtonStyled,
+    TotalContainer,
     Text3XL,
     SectionDiv,
-    OrderCell
+    OrderCell,
+    SubmitButton
 } from './Checkout.element';
+
+const TAX_RATES = {
+    ON: 0.13,
+    QC: 0.14975,
+    BC: 0.12,
+    AB: 0.05,
+    // Add other provinces as needed
+};
 
 function CheckoutForm({ cartItems, setSelectedProvince }) {
     const [email, setEmail] = useState('');
+    const [taxes, setTaxes] = useState(0);
+    const [total, setTotal] = useState(0);
+    const [province, setProvince] = useState('');
     const stripe = useStripe();
     const elements = useElements();
 
-    const totalPrice = () => {
-        let total = 0;
-        for (const item of cartItems) {
-            total += item.price * item.quantity;
+
+    const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+
+    useEffect(() => {
+        const calculateSubtotal = () => {
+            return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+        };
+        const calculateTotals = (province) => {
+            const subTotal = calculateSubtotal();
+            const taxRate = TAX_RATES[province] || 0;
+            const calculatedTaxes = subTotal * taxRate;
+            const calculatedTotal = subTotal + calculatedTaxes;
+            setTaxes(calculatedTaxes);
+            setTotal(calculatedTotal);
+        };
+
+        if (province) {
+            calculateTotals(province);
         }
-        return total.toLocaleString("en-CA", { style: "currency", currency: "CAD" });
-    }
+    }, [province, cartItems]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -55,6 +80,7 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
     const handleAddressChange = (e) => {
         const address = e.value.address;
         setSelectedProvince(address.state);
+        setProvince(address.state);
     }
 
     return (
@@ -79,12 +105,24 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
                 }} onChange={handleAddressChange}/>
                 <PaymentElement />
             </OrderCell>
-            <TotalLabel>Total:
-                <TotalValue>{totalPrice()}</TotalValue>
-            </TotalLabel>
-            <ButtonStyled type="submit" disabled={!stripe} onClick={handleSubmit}>
+            <TotalContainer>
+                <TotalLabel>Subtotal:
+                    <TotalValue>{subtotal.toLocaleString("en-CA", { style: "currency", currency: "CAD" })}</TotalValue>
+                </TotalLabel>
+                {taxes !== 0 && (
+                    <>
+                        <TotalLabel>Taxes:
+                            <TotalValue>{taxes.toLocaleString("en-CA", { style: "currency", currency: "CAD" })}</TotalValue>    
+                        </TotalLabel>
+                        <TotalLabel>Total:
+                            <TotalValue>{total.toLocaleString("en-CA", { style: "currency", currency: "CAD" })}</TotalValue>    
+                        </TotalLabel>
+                    </>
+                )}
+            </TotalContainer>
+            <SubmitButton type="submit" disabled={!stripe} onClick={handleSubmit}>
                 Pay
-            </ButtonStyled>
+            </SubmitButton>
         </SectionDiv>
     );
 }
