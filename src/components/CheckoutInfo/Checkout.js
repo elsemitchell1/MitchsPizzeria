@@ -73,7 +73,7 @@ function Checkout() {
 
     useEffect(() => {
         const updatePaymentIntent = async () => {
-
+            if(!paymentIntentId || !selectedProvince) return;
             try {
                 const response = await fetch("https://pizzaserver-bqim.onrender.com/update-payment-intent", {
                     method: "POST",

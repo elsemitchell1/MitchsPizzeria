@@ -83,7 +83,6 @@ app.post("/update-payment-intent", async (req, res) => {
         const tax = calculateTax(amount, province);
         const totalAmount = Math.round(amount + tax);
         const description = constructOrderDescription(items);
-        console.log(paymentIntentId);
 
         // Update the payment intent with the new total amount
         const updatedPaymentIntent = await stripe.paymentIntents.update(paymentIntentId, {
