@@ -15,7 +15,7 @@ function PaymentSuccess() {
     }
 
     useEffect(() => {
-        window.history.replaceState({}, document.title, window.location.pathname);
+        window.history.replaceState({}, document.title, window.location.hash.replace(/^#/, '#/'));
         clearItems();
         // eslint-disable-next-line
     },[]); 
