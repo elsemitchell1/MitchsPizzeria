@@ -15,6 +15,7 @@ function PaymentSuccess() {
     }
 
     useEffect(() => {
+        window.history.replaceState({}, document.title, window.location.pathname);
         clearItems();
         // eslint-disable-next-line
     },[]); 
