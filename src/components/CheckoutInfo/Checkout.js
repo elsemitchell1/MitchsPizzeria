@@ -60,6 +60,7 @@ function Checkout() {
                 const { clientSecret: fetchedClientSecret, paymentIntentId: fetchedPaymentIntentId } = await response.json();
                 setClientSecret(fetchedClientSecret);
                 setPaymentIntentId(fetchedPaymentIntentId);
+                console.log(paymentIntentId);
             } catch (error) {
                 console.error("Error creating payment intent:", error.message);
             } finally {
@@ -72,7 +73,6 @@ function Checkout() {
 
     useEffect(() => {
         const updatePaymentIntent = async () => {
-            if (!paymentIntentId || !selectedProvince) return;
 
             try {
                 const response = await fetch("https://pizzaserver-bqim.onrender.com/update-payment-intent", {
