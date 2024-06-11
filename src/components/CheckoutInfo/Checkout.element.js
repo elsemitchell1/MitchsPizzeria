@@ -26,12 +26,15 @@ export const FormContainer = styled.form`
 `;
 
 export const FormLabel = styled.label`
-  font-weight: bold;
+  font-weight: lighter;
+  font-size:16px;
+  margin-bottom: 2px;
 `;
 
 export const FormInput = styled.input`
   padding: 8px;
   border: 1px solid #ccc;
+  border-radius:5px;
 `;
 
 export const FormTextArea = styled.textarea`

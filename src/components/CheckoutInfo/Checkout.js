@@ -115,6 +115,18 @@ function Checkout() {
         );
     }
 
+    const appearance = {
+        theme: 'stripe',
+        variables: {
+            colorPrimary: '#ffffff', // Change the primary color to white
+        },
+        rules: {
+            '.Label, .CheckboxLabel': {
+                color: '#ffffff', // Change the input text color to white
+            },
+        },
+    };
+
     return (
         <FlexCol>
             <CheckoutTitle>Checkout</CheckoutTitle>
@@ -131,7 +143,7 @@ function Checkout() {
                         </PaymentLoadingContainer>
                     ) : (
                         stripePromise && clientSecret && (
-                            <Elements stripe={stripePromise} options={{ clientSecret }}>
+                            <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
                             <CheckoutForm cartItems={cartItems} setSelectedProvince={setSelectedProvince} />
                             </Elements>
                         )
