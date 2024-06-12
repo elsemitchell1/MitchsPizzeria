@@ -36,6 +36,7 @@ export const ProductHeading = styled.h1`
 export const ProductTileContainer = styled.div`
   display: flex;
   width: 100%;
+  max-width: 1300px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;

@@ -5,8 +5,9 @@ export const CartRowContainer = styled.div`
   padding: 50px 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-items: center;
   background: #242424;
+  min-height: 50vh;
 `;
 
 export const CartRowBubbleHeading = styled.div`

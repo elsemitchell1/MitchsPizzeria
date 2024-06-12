@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import GlobalStyle from './globalStyles';
-import {Navbar} from './components';
-import { HashRouter, Route, Routes } 
+import {Footer, Navbar} from './components';
+import { HashRouter, Route, Routes, useLocation } 
 from 'react-router-dom';
 import Home from './pages/HomePage/Home';
 import Pizza from './pages/PizzaPage/PizzaPage';
@@ -32,8 +32,16 @@ function App() {
     // Render error message if there's an error fetching products
     return <div>Error: {error.message}</div>;
   }
+
+  const ScrollToTop = () => {
+    const pathname = useLocation();
+    useEffect(() => {
+      window.scroll(0,0);
+    },[pathname]);
+  }
   return (
       <HashRouter basename='/'>
+        <ScrollToTop/>
         <GlobalStyle />
         <Navbar />
         <Routes>
@@ -47,6 +55,7 @@ function App() {
           <Route path='/Checkout' element={<CheckoutPage/>}/>
           <Route path='/PaymentSuccess' element={<PaymentSuccess/>}/>
         </Routes>
+        <Footer/>
       </HashRouter>
   );
 }

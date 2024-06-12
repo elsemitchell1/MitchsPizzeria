@@ -6,3 +6,4 @@ export {default as ProductInfo} from './ProductInfo/ProductInfo';
 export {default as Checkout} from './CheckoutInfo/Checkout';
 export {default as About} from './About/About';
 export {default as ShoppingCart} from './ShoppingCart/ShoppingCart';
+export {default as Footer} from './Footer/Footer';

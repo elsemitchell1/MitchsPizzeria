@@ -5,6 +5,7 @@ export const AboutContainer = styled.div`
     color: #fff;
     padding: 50px;
     justify-items: center;
+    min-height: 50vh;
 `;
 
 export const AboutPre = styled.pre`

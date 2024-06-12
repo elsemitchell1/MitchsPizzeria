@@ -234,6 +234,7 @@ flex-direction: column;
 align-items: center;
 color: white;
 margin-top: 20px;
+min-height: 50vh;
 `;
 
 export const SuccessTitle = styled.h4`
