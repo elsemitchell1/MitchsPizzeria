@@ -56,6 +56,7 @@ export const FooterContactContainer = styled.div`
 export const FooterForm = styled.form`
   display: flex;
   flex-direction: column;
+  margin: 0 30px;
   align-items: center;
 `;
 

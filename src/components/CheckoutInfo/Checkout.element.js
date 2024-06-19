@@ -224,8 +224,9 @@ export const PaymentLoadingContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  margin-top: 20px;
   height: 100%;
+  min-height: 40vh;
 `;
 
 export const PaymentSuccessDiv = styled.div`
