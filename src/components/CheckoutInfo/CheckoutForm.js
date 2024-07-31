@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PaymentElement, useStripe, useElements, AddressElement } from "@stripe/react-stripe-js";
+import { PaymentElement, useStripe, useElements, AddressElement, PaymentRequestButtonElement } from "@stripe/react-stripe-js";
 import {
     FormContainer,
     FormRow,
@@ -35,6 +35,7 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
     const [taxes, setTaxes] = useState(0);
     const [total, setTotal] = useState(0);
     const [province, setProvince] = useState('');
+    const [paymentRequest, setPaymentRequest] = useState(null);
     const stripe = useStripe();
     const elements = useElements();
 
@@ -42,6 +43,27 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
 
 
     const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+
+    useEffect(() => {
+        if (stripe) {
+            const paymentRequest = stripe.paymentRequest({
+                country: 'CA',
+                currency: 'cad',
+                total: {
+                    label: 'Total',
+                    amount: Math.round(total * 100), // amount in cents
+                },
+                requestPayerName: true,
+                requestPayerEmail: true,
+            });
+
+            paymentRequest.canMakePayment().then((result) => {
+                if (result) {
+                    setPaymentRequest(paymentRequest);
+                }
+            });
+        }
+    }, [stripe, total]);
 
     useEffect(() => {
         const calculateSubtotal = () => {
@@ -94,6 +116,16 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
         setProvince(address.state);
     }
 
+    const handlePaymentRequestButtonClick = async () => {
+        if (!paymentRequest) return;
+
+        const { error } = await paymentRequest.show();
+
+        if (error) {
+            console.error('Payment Request Error:', error);
+        }
+    };
+
     return (
         <SectionDiv>
             <Text3XL>Payment Details:</Text3XL>
@@ -115,6 +147,19 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
                     allowedCountries: ['CA'],
                 }} onChange={handleAddressChange}/>
                 <PaymentElement />
+                {paymentRequest && (
+                    <PaymentRequestButtonElement
+                        options={{
+                            paymentRequest,
+                            style: {
+                                paymentRequestButton: {
+                                    theme: 'dark',
+                                },
+                            },
+                        }}
+                        onClick={handlePaymentRequestButtonClick}
+                    />
+                )}
             </OrderCell>
             <TotalContainer>
                 <TotalLabel>Subtotal:
