@@ -51,7 +51,7 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
                 currency: 'cad',
                 total: {
                     label: 'Total',
-                    amount: Math.round(total * 100), // amount in cents
+                    amount: Math.round(subtotal * 100), // amount in cents
                 },
                 requestPayerName: true,
                 requestPayerEmail: true,
