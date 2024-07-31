@@ -55,6 +55,8 @@ function CheckoutForm({ cartItems, setSelectedProvince }) {
                 },
                 requestPayerName: true,
                 requestPayerEmail: true,
+                requestPayerPhone: true,
+                requestShipping: true,
             });
 
             paymentRequest.canMakePayment().then((result) => {
